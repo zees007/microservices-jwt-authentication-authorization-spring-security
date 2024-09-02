@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  healthprovider-mongodb:
+    container_name: healthprovider-mongodb-container
+    image: mongo:latest
+    volumes:
+      - ./docker/mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: healthprovider-service
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
