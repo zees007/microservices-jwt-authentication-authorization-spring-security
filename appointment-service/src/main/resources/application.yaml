@@ -2,20 +2,21 @@ spring:
   application:
     name: appointment-service
   datasource:
-    url: jdbc:mysql://localhost:3306/appointment_service
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3307/appointment_service
+    username: username
+    password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-    show-sql: true
+    show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 server:
   port: 9090
 
-health:
-  provider:
-    url: http://localhost:9091
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:9092/eureka/

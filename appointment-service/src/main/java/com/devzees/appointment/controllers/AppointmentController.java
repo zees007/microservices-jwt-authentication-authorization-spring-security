@@ -24,7 +24,7 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
 
     @PostMapping
-    public String bookAppointment(@RequestParam LocalDate date, @RequestParam String department) {
-        return appointmentService.bookAppointment(date, department);
+    public String bookAppointment(@RequestParam LocalDate selectedDate, @RequestParam String department) {
+        return appointmentService.bookAppointment(selectedDate, department);
     }
 }
