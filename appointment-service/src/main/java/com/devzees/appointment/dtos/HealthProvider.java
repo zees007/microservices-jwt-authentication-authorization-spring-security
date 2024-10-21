@@ -24,7 +24,7 @@ public class HealthProvider {
     private String hpName;
     private String hpDepartment;
     private Boolean isDailyAvailable;
-    private List<Long> daysAvailable; // MongoDB handles lists well
+    private List<Long> daysAvailable;
     private LocalTime dutyStartTime;
     private LocalTime dutyEndTime;
 

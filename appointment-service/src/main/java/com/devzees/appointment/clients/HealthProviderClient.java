@@ -16,7 +16,5 @@ import java.util.List;
 
 public interface HealthProviderClient {
     @GetExchange("/api/v1/healthproviders/available")
-    List<HealthProvider> getAllAvailableHealthProviderByDateAndDepartment(@RequestParam LocalDate selectedDate, @RequestParam String department);
-
-
+    List<HealthProvider> getAvailableHealthProviders(@RequestParam LocalDate selectedDate, @RequestParam String department);
 }

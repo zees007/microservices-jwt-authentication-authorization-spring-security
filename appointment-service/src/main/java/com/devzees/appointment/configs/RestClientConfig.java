@@ -18,14 +18,24 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 public class RestClientConfig {
 
     @Bean
-    public HealthProviderClient healthProviderClient() {
-        RestClient restClient = RestClient.builder()
-                .baseUrl("inventoryServiceUrl")
-                .build();
-        var restClientAdapter = RestClientAdapter.create(restClient);
-        var httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter).build();
-        return httpServiceProxyFactory.createClient(HealthProviderClient.class);
+    RestClient.Builder restClientBuilder() {
+        return RestClient.builder();
     }
 
+    @Bean
+    public HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder restClientBuilder) {
+        RestClient restClient = restClientBuilder
+                .baseUrl("http://localhost:9091")
+                .build();
+        RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
+        return HttpServiceProxyFactory
+                .builderFor(restClientAdapter)
+                .build();
+    }
+
+    @Bean
+    public HealthProviderClient healthProviderClient(HttpServiceProxyFactory httpServiceProxyFactory) {
+        return httpServiceProxyFactory.createClient(HealthProviderClient.class);
+    }
 
 }
