@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:mysql://localhost:3308/auth_service
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+server:
+  port: 9093
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:9092/eureka/
+
+jwt:
+  expiryDate: 300
