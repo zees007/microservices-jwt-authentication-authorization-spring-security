@@ -7,10 +7,15 @@ package com.devzees.auth.services;
  * Time:15:18
  */
 
+import com.devzees.auth.models.Role;
 import com.devzees.auth.models.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class CustomUserDetails extends User implements UserDetails {
 
@@ -20,6 +25,13 @@ public class CustomUserDetails extends User implements UserDetails {
     public CustomUserDetails(User byUsername) {
         this.username = byUsername.getUsername();
         this.password= byUsername.getPassword();
+        List<GrantedAuthority> auths = new ArrayList<>();
+
+        for(Role role : byUsername.getRoles()){
+
+            auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
+        }
+        this.authorities = auths;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
