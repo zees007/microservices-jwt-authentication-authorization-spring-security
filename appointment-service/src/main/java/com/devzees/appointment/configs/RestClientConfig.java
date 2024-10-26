@@ -25,7 +25,7 @@ public class RestClientConfig {
     @Bean
     public HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder restClientBuilder) {
         RestClient restClient = restClientBuilder
-                .baseUrl("http://localhost:9091")
+                .baseUrl("http://HEALTHPROVIDER-SERVICE")
                 .build();
         RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
         return HttpServiceProxyFactory

@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: healthprovider-service
+          uri: lb://HEALTHPROVIDER-SERVICE
+          predicates:
+            - Path=/api/v1/healthproviders/**
+          filters:
+            - JwtFilter
+
+        - id: appointment-service
+          uri: lb://APPOINTMENT-SERVICE
+          predicates:
+            - Path=/api/v1/appointments/**
+          filters:
+            - JwtFilter
+
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+
+  application:
+    name: api-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:9092/eureka/
