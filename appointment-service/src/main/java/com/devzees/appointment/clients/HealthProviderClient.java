@@ -26,7 +26,7 @@ public interface HealthProviderClient {
     Logger log = LoggerFactory.getLogger(HealthProviderClient.class);
     @GetExchange("/api/v1/healthproviders/available")
     @CircuitBreaker(name = "healthProvider", fallbackMethod = "getGeneralProviders")
-//    @Retry(name = "healthProvider")
+    @Retry(name = "healthProvider")
     List<HealthProvider> getAvailableHealthProviders(@RequestParam LocalDate selectedDate, @RequestParam String department);
 
     default List<HealthProvider> getGeneralProviders(Throwable throwable) {
