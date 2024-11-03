@@ -20,3 +20,36 @@ eureka:
   client:
     service-url:
       defaultZone : http://localhost:9092/eureka/
+
+
+#resilience4j properties
+resilience4j:
+  circuitbreaker:
+    instances:
+      healthProvider:  # Circuit breaker name is "healthProvider" for healthProvider service
+        register-health-indicator: true
+        sliding-window-type: count_based
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+  retry:
+    instances:
+      healthProvider: # retry module name is "healthProvider" for healthProvider service
+        max-attempts: 3
+        wait-duration: 10s
+
+# Actuator properties
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
