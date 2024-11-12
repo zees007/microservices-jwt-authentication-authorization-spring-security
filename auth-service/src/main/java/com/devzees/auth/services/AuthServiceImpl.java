@@ -33,7 +33,8 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public JwtResponseDTO generateToken(String username) {
-        return JwtResponseDTO.builder().accessToken(jwtService.generateToken(username)).build();
+        User user = userRepository.findByUsername(username);
+        return JwtResponseDTO.builder().accessToken(jwtService.generateToken(user)).build();
     }
 
     @Override
