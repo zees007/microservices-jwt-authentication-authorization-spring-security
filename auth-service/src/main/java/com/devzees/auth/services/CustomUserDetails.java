@@ -22,12 +22,12 @@ public class CustomUserDetails extends User implements UserDetails {
     private final String username;
     private final String password;
     Collection<? extends GrantedAuthority> authorities;
-    public CustomUserDetails(User byUsername) {
-        this.username = byUsername.getUsername();
-        this.password= byUsername.getPassword();
+    public CustomUserDetails(User user) {
+        this.username = user.getUsername();
+        this.password= user.getPassword();
         List<GrantedAuthority> auths = new ArrayList<>();
 
-        for(Role role : byUsername.getRoles()){
+        for(Role role : user.getRoles()){
 
             auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
         }

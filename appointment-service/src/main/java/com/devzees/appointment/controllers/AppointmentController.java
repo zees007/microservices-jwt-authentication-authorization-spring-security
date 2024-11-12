@@ -2,6 +2,7 @@ package com.devzees.appointment.controllers;
 
 import com.devzees.appointment.services.AppointmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     public String bookAppointment(@RequestParam LocalDate selectedDate, @RequestParam String department) {
         return appointmentService.bookAppointment(selectedDate, department);

@@ -7,12 +7,17 @@ package com.devzees.apigateway.helpers;
  * Time:17:49
  */
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -21,6 +26,28 @@ public class JwtUtils {
 
     public void validateToken(final String token) {
         Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
+    }
+
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String extractUsername(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    // Method to extract roles from token
+    public Set<String> extractRoles(String token) {
+        Claims claims = extractAllClaims(token);
+        List<Map<String, Object>> roles = claims.get("roles", List.class);
+        // Extract only the "name" field from each role map
+        return roles.stream()
+                .map(role -> (String) role.get("name"))  // Extract the name as String
+                .collect(Collectors.toSet());
     }
 
     private Key getSignKey() {

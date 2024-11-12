@@ -13,10 +13,12 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Component
 public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
@@ -33,6 +35,7 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            ServerHttpRequest modifiedRequest = null;
             if (routingRequestValidator.isAuthenticated.test(exchange.getRequest())) {
                 // Check for Authorization header
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
@@ -46,11 +49,21 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
 
                 try {
                     jwtUtils.validateToken(authHeader); // Validate token using JwtUtils
+                    String username = jwtUtils.extractUsername(authHeader);  // Extract username
+                    Set<String> roles = jwtUtils.extractRoles(authHeader);   // Extract roles
+
+                    // Pass user details to downstream microservices
+                    modifiedRequest = exchange.getRequest().mutate()
+                            .header("loggedInUser", username)
+                            .header("roles", String.join(",", roles))
+                            .build();
+
                 } catch (Exception e) {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired JWT token");
                 }
             }
-            return chain.filter(exchange); // Proceed if valid
+            assert modifiedRequest != null;
+            return chain.filter(exchange.mutate().request(modifiedRequest).build()); // Proceed if valid
         };
     }
 
