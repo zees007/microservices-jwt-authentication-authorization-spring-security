@@ -23,3 +23,16 @@ eureka:
 
 jwt:
   expiryDate: 300
+
+management:
+  health:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
