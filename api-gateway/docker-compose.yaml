@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  zipkin:
+    container_name: zipkin-server
+    image: openzipkin/zipkin:latest
+    volumes:
+      - ./docker/mongodb_data:/data/db
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - "9411:9411"

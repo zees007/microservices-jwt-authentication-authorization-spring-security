@@ -1,6 +1,8 @@
 package com.devzees.appointment.configs;
 
 import com.devzees.appointment.clients.HealthProviderClient;
+import io.micrometer.observation.ObservationRegistry;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +18,10 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
  */
 
 @Configuration
+@RequiredArgsConstructor
 public class RestClientConfig {
 
+    private final ObservationRegistry observationRegistry;
     @LoadBalanced
     @Bean
     RestClient.Builder restClientBuilder() {
@@ -28,6 +32,7 @@ public class RestClientConfig {
     public HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder restClientBuilder) {
         RestClient restClient = restClientBuilder
                 .baseUrl("http://HEALTHPROVIDER-SERVICE")
+                .observationRegistry(observationRegistry)
                 .build();
         RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
         return HttpServiceProxyFactory
