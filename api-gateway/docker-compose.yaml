@@ -9,3 +9,9 @@ services:
       - STORAGE_TYPE=mem
     ports:
       - "9411:9411"
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge

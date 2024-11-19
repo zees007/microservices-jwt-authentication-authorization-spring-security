@@ -27,10 +27,22 @@ import java.util.stream.Collectors;
 @Component
 public class RoleFilter extends OncePerRequestFilter {
 
+    private static final ThreadLocal<String> jwtTokenHolder = new ThreadLocal<>();
+
+    public static String getJwtToken() {
+        return jwtTokenHolder.get();
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
+
+        // Extract JWT token from the Authorization header
+        String jwtToken = request.getHeader("Authorization");
+        if (jwtToken != null) {
+            jwtTokenHolder.set(jwtToken); // Store the token in ThreadLocal
+        }
         // Read roles from the request header set by the API Gateway
         String rolesHeader = request.getHeader("roles");
         String username = request.getHeader("loggedInUser");

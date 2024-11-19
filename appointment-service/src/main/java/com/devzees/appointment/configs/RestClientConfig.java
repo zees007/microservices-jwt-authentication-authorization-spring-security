@@ -24,14 +24,15 @@ public class RestClientConfig {
     private final ObservationRegistry observationRegistry;
     @LoadBalanced
     @Bean
-    RestClient.Builder restClientBuilder() {
-        return RestClient.builder();
+    RestClient.Builder restClientBuilder(JwtInterceptor jwtInterceptor) {
+        return RestClient.builder().requestInterceptor(jwtInterceptor);
+
     }
 
     @Bean
     public HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder restClientBuilder) {
         RestClient restClient = restClientBuilder
-                .baseUrl("http://HEALTHPROVIDER-SERVICE")
+                .baseUrl("http://API-GATEWAY")
                 .observationRegistry(observationRegistry)
                 .build();
         RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);

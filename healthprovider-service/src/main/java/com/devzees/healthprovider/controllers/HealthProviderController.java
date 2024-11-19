@@ -36,7 +36,7 @@ public class HealthProviderController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/api/v1/healthproviders/available")
     public ResponseEntity<List<HealthProvider>> getAllAvailableHealthProviderByDateAndDepartment(@RequestParam LocalDate selectedDate, @RequestParam String department){
         try{
