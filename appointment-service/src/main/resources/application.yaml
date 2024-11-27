@@ -58,4 +58,6 @@ management:
       probability: 1.0
 
 
-
+app:
+  logs:
+    fileLocation: C:\Users\mhmdz\Documents\microservices-logs

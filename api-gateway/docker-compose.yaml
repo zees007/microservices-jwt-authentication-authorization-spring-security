@@ -11,7 +11,64 @@ services:
       - "9411:9411"
     networks:
       - microservices-network
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false  # Make sure SSL is disabled
+    ports:
+      - "9200:9200"
+#      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.5.0
+    container_name: logstash
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+    ports:
+      - "5044:5044" # Filebeat input
+    #      - "9600:9600" # Logstash monitoring
+    depends_on:
+      - elasticsearch
+    networks:
+      - microservices-network # Attach the service to the microservices network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.0
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - microservices-network # Attach the service to the microservices network
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.5.0
+    container_name: filebeat
+    user: "root"  # Run as root user
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro  # Mount Filebeat config
+      - C:\Users\mhmdz\Documents\microservices-logs:/usr/share/filebeat/microservices-logs:ro # Mount logs directory
+    depends_on:
+      - logstash
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch:9200
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - "chmod go-w /usr/share/filebeat/filebeat.yml && /usr/share/filebeat/filebeat -e"  # Fix file permissions and start Filebeat
+    networks:
+      - microservices-network
+
 
 networks:
   microservices-network:
     driver: bridge
+
+volumes:
+  es_data:
