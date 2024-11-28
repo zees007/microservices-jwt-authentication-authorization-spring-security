@@ -57,7 +57,7 @@ management:
     sampling:
       probability: 1.0
 
-
+# logging - logs generation directory
 app:
   logs:
-    fileLocation: C:\Users\mhmdz\Documents\microservices-logs
+    fileLocation: C:\Users\mhmdz\Downloads\microservices-logs # Path to your local machine directory
