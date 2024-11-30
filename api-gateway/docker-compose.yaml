@@ -7,6 +7,7 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - xpack.security.http.ssl.enabled=false  # Make sure SSL is disabled
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m # Adjust heap size based on available memory
     ports:
       - "9200:9200"
     networks:
@@ -18,7 +19,9 @@ services:
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
     ports:
-      - "5044:5044" # Filebeat input
+      - "5044:5044" # Filebeat
+    environment:
+      - LS_JAVA_OPTS=-Xms256m -Xmx256m # Adjust heap size
     depends_on:
       - elasticsearch
     networks:
