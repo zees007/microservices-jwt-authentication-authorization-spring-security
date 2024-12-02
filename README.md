@@ -4,7 +4,10 @@ Are you new to microservices? Struggling to understand how to create services, h
 
 This series is designed to be comprehensive and provide a detailed, step-by-step implementation of each topic. To facilitate learning, I have broken it down into multiple parts as below. I encourage you to follow each tutorial with me for a practical hands-on experience with microservices.
 
+![apiv1appointment (1)](https://github.com/user-attachments/assets/51d5ff3a-5436-453c-b7ce-6f075b2214a5)
+
 ✅ Building Microservices [PART-1]: Inter-Service Communication with RestClient & HttpInterface, and Securing with JWT
+
 https://levelup.gitconnected.com/building-microservices-part-1-inter-service-communication-with-restclient-httpinterface-and-d6ce48841111
 
 ➡️ HealthProvider-Service
@@ -12,6 +15,7 @@ https://levelup.gitconnected.com/building-microservices-part-1-inter-service-com
 ➡️ Auth-Service
 
 ✅ Building Microservices [PART-2]: Service Registry & API Gateway Implementations with JWT Authentication
+
 https://levelup.gitconnected.com/building-microservices-part-2-service-registry-api-gateway-implementations-with-jwt-8b754b6c2f80
 
 ➡️ Spring Cloud Gateway (API Gateway)
@@ -24,12 +28,14 @@ https://levelup.gitconnected.com/building-microservices-part-3-role-based-authen
 ➡️ RBAC Implementations
 
 ✅ Building Microservices [PART-4]: Implementing Circuit Breaker with Resilience4J — Retry and Fallback Methods
+
 https://medium.com/gitconnected/building-microservices-part-4-implementing-circuit-breaker-with-resilience4j-retry-and-ce38b8ed5fe5
 
 ➡️ Resilence4J Circuit Breaker
 ➡️ Retry Module Implementation
 
 ✅ Monitoring Microservices [PART-5]: Implementing Distributed Tracing & Observability with Micrometer Brave and Zipkin
+
 https://medium.com/gitconnected/monitoring-microservices-part-5-implementing-distributed-tracing-observability-with-micrometer-ea728cc954d2
 
 ✨Below topics will be available very soon....
