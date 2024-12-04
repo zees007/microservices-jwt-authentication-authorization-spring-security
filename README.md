@@ -38,9 +38,17 @@ https://medium.com/gitconnected/building-microservices-part-4-implementing-circu
 
 https://medium.com/gitconnected/monitoring-microservices-part-5-implementing-distributed-tracing-observability-with-micrometer-ea728cc954d2
 
+✅ Monitoring Microservices [PART -6]: ELK Stack for Logging & Monitoring Using Filebeat
+
+https://levelup.gitconnected.com/monitoring-microservices-part-6-elk-stack-for-logging-monitoring-using-filebeat-8739fe05b5e9
+
+➡️ Implementation of Centralized Logging using Logback
+➡️ ELK (Elasticsearch, Logstash & Kibana) along with Filebeat set up using docker compose
+
+➡️ Create Index Pattern & Data View on Kibana
+
 ✨Below topics will be available very soon....
 
-✅ ELK Stack for Logging & Monitoring
 ✅ Containerization of Microservices
 ✅ Deployment on Kubernetes Cluster using Minikube/Docker Desktop single node cluster
 
